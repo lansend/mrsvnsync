@@ -1,8 +1,9 @@
-#! /usr/bin/env python3.2
+#! /usr/bin/env python3
 import string, os, sys
 import configparser,subprocess
 import httplib2
 import re
+import platform
 
 
 def callCommandAndPrintResult(command):
@@ -28,18 +29,19 @@ def multiRepoSvnSync(repoNames):
 	    		#svnadmin create
 	    		svnCreateCommand = svnCreate + localDestUrl
 	    		callCommandAndPrintResult(svnCreateCommand)
-	    		#hook for windows
+	    		#hook script file for windows
 	    		prcHook = open(localDestUrl+"/hooks/pre-revprop-change.bat",'a')
 	    		prcHook.write("exit 0")
 	    		prcHook.close()
-	    		#hook for unix like system
+	    		#hook script file for unix like system
 	    		prcHook = open(localDestUrl+"/hooks/pre-revprop-change",'a')
 	    		prcHook.write("#!/bin/sh\n")
 	    		prcHook.write("exit 0\n")
 	    		prcHook.close()
-	    		#chmod 
-	    		chmodCommand = "chmod 755 " +localDestUrl+"/hooks/pre-revprop-change"
-	    		callCommandAndPrintResult(chmodCommand)
+	    		#only for unix like system , chmod for the hook script file
+	    		if platform.system()!="Windows":
+	    			chmodCommand = "chmod 755 " +localDestUrl+"/hooks/pre-revprop-change"
+	    			callCommandAndPrintResult(chmodCommand)
 
 	    		#svnsync init
 	    		svnsyncInitCommand = svnsyncInit + backupDestUrl + backupSourceUrl + userNameAndPassword + svnsyncParam
