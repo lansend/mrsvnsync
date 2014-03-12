@@ -90,9 +90,15 @@ else:
 	http = httplib2.Http(cache=".cache",disable_ssl_certificate_validation=True)
 	http.add_credentials(UserName,Password)
 	resp,content = http.request(SVNAccessUrl,headers={'cache-control':'no-cache'})
-	content = content.decode('UTF-8')
-	pattern = re.compile(r'<dir name="(.*?)".*?/>')
-	repoNames = pattern.findall(content)
+	if resp.status==200:
+		content = content.decode('UTF-8')
+		pattern = re.compile(r'<dir name="(.*?)".*?/>')
+		repoNames = pattern.findall(content)
+	else:
+		print("Access the svn server error , the response code is :",
+			resp.status)
+		sys.exit(0)
+
 
 
 multiRepoSvnSync(repoNames)
