@@ -13,7 +13,7 @@ Usage
 <pre><code>SVNBackupDir =  C:/SvnBackup</code></pre>
 <p>If you run mrsvnsync locally on the SVN server , you should set the SVNPathParentPath , for example :</p>
 <pre><code>SVNPathParentPath =  C:/Repositories</code></pre>
-<p>If you run mrsvnsync on the another server , and you access the SVN server by HTTP or HTTPS protocol , you should set the SVNAccessUrl , for example:</p>
+<p>If you run mrsvnsync on another server , and you access the SVN server by HTTP or HTTPS protocol , you should set the SVNAccessUrl , for example:</p>
 <pre><code>SVNAccessUrl = https://192.168.1.1/svn/</code></pre>
 <p>
 If your SVN server  requires authentication , you may specify the username and password:
